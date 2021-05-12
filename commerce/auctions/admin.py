@@ -1,5 +1,5 @@
 from django.contrib import admin
-from commerce.auctions.models import categ, leilao
+from .models import categ, leilao
 
 # Register your models here.
 admin.site.register(categ)
