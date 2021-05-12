@@ -1,6 +1,9 @@
 from django.contrib import admin
-from commerce.auctions.models import categ, leilao
+from .models import categ, leilao, User
+class leilaoadmin(admin.ModelAdmin):
+    list_display = ("id", "titulo", "descricao", "valor_min", "foto", "categ")
 
 # Register your models here.
 admin.site.register(categ)
-admin.site.register(leilao)
+admin.site.register(leilao, leilaoadmin)
+admin.site.register(User)
