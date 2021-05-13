@@ -1,0 +1,39 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h1>Criar um novo item:</h1>
+
+<form action="{% url 'createlist' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <input autofocus class="form-control" type="text" name="titulo" placeholder="Titulo">
+    </div>
+    <div class="form-group">
+        <input autofocus class="form-control" type="text" name="descrição" placeholder="Descrição">
+    </div>
+    <div class="form-group">
+        <input autofocus class="form-control" type="text" name="url" placeholder="Url da imagem">
+    </div>
+
+    <div class="form-group">
+        <option autofocus class="form-control" type="text" name="categoria" placeholder="Categoria">
+    </div>
+
+
+
+    <input class="btn btn-primary" type="submit" value="Carregar item">
+</form>
+lucas
+   
+<ul>
+    {% for cate in categ %}
+        <li>Cate {{ cate.id }}: {{ cate.cat }} </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+
+
+
+
