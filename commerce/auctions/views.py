@@ -3,6 +3,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from .models import User, leilao, categ
 
@@ -77,3 +78,23 @@ def createlist_view(request):
 
 def watchlist_view(request):
     return render(request, "auctions/watchlist.html")
+
+@login_required    
+def cadastro(request):
+    if request.method == "POST":
+        teste=leilao()
+        teste.titulo = request.POST["leilao_it"]
+        teste.descricao = request.POST["desc_it"]
+        teste.valor_min = request.POST["valor_m"]
+        teste.categ = request.POST["categoria"]
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.cleaned_data['image']
+            teste.Image = image
+        teste.save()
+        return HttpResponseRedirect(reverse("cadastro"))
+    else:
+        categor = categ.objects.all()
+        return render(request, "auctions/cadastro.html",{
+            "categor": categor
+        })
