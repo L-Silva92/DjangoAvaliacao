@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import categ, leilao, User
 class leilaoadmin(admin.ModelAdmin):
-    list_display = ("id", "titulo", "descricao", "valor_min", "foto", "categ")
+    list_display = ("id", "titulo", "descricao", "valor_min", "catego")
 
 # Register your models here.
 admin.site.register(categ)

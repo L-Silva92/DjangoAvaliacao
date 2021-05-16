@@ -68,33 +68,27 @@ def register(request):
 def categories_view(request):
     return render(request, "auctions/categories.html")
 
+@login_required
 def createlist_view(request):
-    categ = categ.cat.all()
+    if request.method == "POST":
+        teste=leilao()
+        teste.titulo = request.POST["title"]
+        teste.descricao = request.POST["desc"]
+        teste.valor_min = request.POST["valor_m"]
+        teste.catego = request.POST["cate"]
+        #form = ImageUploadForm(request.POST, request.FILES)
+        #if form.is_valid():
+        #    image = form.cleaned_data['image']
+        #    teste.Image = image
+        teste.save()
+        return HttpResponseRedirect(reverse("createlist"))
+    else:
+        categor = categ.objects.all()
 
-    return render(request, "auctions/createlist.html",{
-        "categ":categ,
-    })
+        return render(request, "auctions/createlist.html",{
+            "categor": categor,
+        })
 
 
 def watchlist_view(request):
     return render(request, "auctions/watchlist.html")
-
-@login_required    
-def cadastro(request):
-    if request.method == "POST":
-        teste=leilao()
-        teste.titulo = request.POST["leilao_it"]
-        teste.descricao = request.POST["desc_it"]
-        teste.valor_min = request.POST["valor_m"]
-        teste.categ = request.POST["categoria"]
-        form = ImageUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            image = form.cleaned_data['image']
-            teste.Image = image
-        teste.save()
-        return HttpResponseRedirect(reverse("cadastro"))
-    else:
-        categor = categ.objects.all()
-        return render(request, "auctions/cadastro.html",{
-            "categor": categor
-        })
