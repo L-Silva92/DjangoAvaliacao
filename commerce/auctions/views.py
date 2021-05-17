@@ -76,6 +76,7 @@ def createlist_view(request):
         teste.descricao = request.POST["desc"]
         teste.valor_min = request.POST["valor_m"]
         teste.catego = request.POST["cate"]
+        teste.dono = request.user.username
         #form = ImageUploadForm(request.POST, request.FILES)
         #if form.is_valid():
         #    image = form.cleaned_data['image']
