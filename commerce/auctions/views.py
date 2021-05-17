@@ -63,7 +63,9 @@ def register(request):
         return render(request, "auctions/register.html")
 
 def categories_view(request):
-    return render(request, "auctions/categories.html")
+    return render(request, "auctions/categories.html", {
+        "categs": categ.objects.all()
+    })
 
 @login_required
 def createlist_view(request):
@@ -96,37 +98,10 @@ def product(request, product_id):
         "product" : product,
     })
 
-@login_required
-def bid(request, product_id):
-    auction = get_object_or_404(leilao, pk=product_id)
-    auction.resolve()
-    bid = Bid.objects.filter(bidder=request.user.username).filter(auction=auction).first()
-
-    if not auction.is_active:
-        return render(request, 'auctions/product.html', {
-            'auction': auction,
-            'error_message': "The auction has expired.",
-        })
-
-    try:
-        bid_amount = request.POST['amount']
-        # Prevent user from entering an empty or invalid bid
-        if not bid_amount or int(bid_amount) < auction.valor_min:
-            raise(KeyError)
-        if not bid:
-            # Create new Bid object if it does not exist
-            bid = Bid()
-            bid.auction = auction
-            bid.bidder = request.user.username
-        bid.amount = bid_amount
-    except (KeyError):
-        # Redisplay the auction details.
-        return render(request, 'auctions/product.html', {
-            'auction': auction,
-            'error_message': "Invalid bid amount.",
-        })
-    else:
-        bid.save()
-        return HttpResponseRedirect(reverse('product.html', args=()))
-
-
+def filtro(request,filtro_id):
+    filtro = leilao.objects.filter(catego=filtro_id)
+    passengers = leilao.objects.all()
+    return render(request, "auctions/filtro.html", {
+        "filtro" : filtro,
+        "passengers":passengers,
+    })
