@@ -1,18 +1,17 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import User, leilao, categ
+from .models import Bid, Lance, User, leilao, categ
 
 
 def index(request):
     return render(request, "auctions/index.html",{
         "teste": leilao.objects.all()
     })
-
 
 def login_view(request):
     if request.method == "POST":
@@ -33,11 +32,9 @@ def login_view(request):
     else:
         return render(request, "auctions/login.html")
 
-
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
-
 
 def register(request):
     if request.method == "POST":
@@ -90,7 +87,6 @@ def createlist_view(request):
             "categor": categor,
         })
 
-
 def watchlist_view(request):
     return render(request, "auctions/watchlist.html")
 
@@ -99,3 +95,38 @@ def product(request, product_id):
     return render(request, "auctions/product.html", {
         "product" : product,
     })
+
+@login_required
+def bid(request, product_id):
+    auction = get_object_or_404(leilao, pk=product_id)
+    auction.resolve()
+    bid = Bid.objects.filter(bidder=request.user.username).filter(auction=auction).first()
+
+    if not auction.is_active:
+        return render(request, 'auctions/product.html', {
+            'auction': auction,
+            'error_message': "The auction has expired.",
+        })
+
+    try:
+        bid_amount = request.POST['amount']
+        # Prevent user from entering an empty or invalid bid
+        if not bid_amount or int(bid_amount) < auction.valor_min:
+            raise(KeyError)
+        if not bid:
+            # Create new Bid object if it does not exist
+            bid = Bid()
+            bid.auction = auction
+            bid.bidder = request.user.username
+        bid.amount = bid_amount
+    except (KeyError):
+        # Redisplay the auction details.
+        return render(request, 'auctions/product.html', {
+            'auction': auction,
+            'error_message': "Invalid bid amount.",
+        })
+    else:
+        bid.save()
+        return HttpResponseRedirect(reverse('product.html', args=()))
+
+
