@@ -1,0 +1,14 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h1>Produto {{ leilao.id }}</h1>
+    <ul>
+        <li>Titulo: {{ product.titulo }}</li>
+        <li>Descrição: {{ product.descricao }}</li>
+        <li>Categoria: {{ product.catego }}</li>
+        <li>Valor Minimo: {{ product.valor_min }}</li>
+        <li>Dono: {{ product.dono }}</li>
+    </ul>    
+
+    <a href="{% url 'index' %}">All Products</a>
+{% endblock %}

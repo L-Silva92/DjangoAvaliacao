@@ -93,3 +93,9 @@ def createlist_view(request):
 
 def watchlist_view(request):
     return render(request, "auctions/watchlist.html")
+
+def product(request, product_id):
+    product = leilao.objects.get(id=product_id)
+    return render(request, "auctions/product.html", {
+        "product" : product,
+    })
