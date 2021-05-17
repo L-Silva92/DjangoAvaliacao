@@ -66,7 +66,9 @@ def register(request):
         return render(request, "auctions/register.html")
 
 def categories_view(request):
-    return render(request, "auctions/categories.html")
+    return render(request, "auctions/categories.html", {
+        "categs": categ.objects.all()
+    })
 
 @login_required
 def createlist_view(request):
@@ -98,4 +100,12 @@ def product(request, product_id):
     product = leilao.objects.get(id=product_id)
     return render(request, "auctions/product.html", {
         "product" : product,
+    })
+
+def filtro(request,filtro_id):
+    filtro = leilao.objects.filter(catego=filtro_id)
+    passengers = leilao.objects.all()
+    return render(request, "auctions/filtro.html", {
+        "filtro" : filtro,
+        "passengers":passengers,
     })

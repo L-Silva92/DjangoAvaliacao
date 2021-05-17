@@ -1,0 +1,25 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h1>Categorias</h1>
+
+{% for i in passengers %}
+   
+
+    {{filtro}}
+
+        <ul>
+            <h2>Item: {{ i.id }}</h2>
+            <li>Título: {{ i.titulo }}</li>
+            <li>Descrição: {{ i.descriçao }}</li>
+            <li>Valor minímo: {{ i.valor_min }}</li>
+            <li>Dono: {{ i.dono }} </li>
+        </ul>
+        
+
+{% endfor %}
+
+<a href="{% url 'categories' %}">All Categories</a>
+
+{% endblock %}
