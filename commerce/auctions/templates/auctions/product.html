@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h1>Produto {{ leilao.id }}</h1>
+    <h1>Produto</h1>
     <ul>
         <li>Titulo: {{ product.titulo }}</li>
         <li>Descrição: {{ product.descricao }}</li>
@@ -9,6 +9,14 @@
         <li>Valor Minimo: {{ product.valor_min }}</li>
         <li>Dono: {{ product.dono }}</li>
     </ul>    
+
+    <form action="{% url 'bid' leilao.id %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input autofocus class="form-control" type="number" name="amount" placeholder="Valor Minimo">
+        </div>
+        <input class="btn btn-primary" type="submit" value="Carregar item">
+    </form>
 
     <a href="{% url 'index' %}">All Products</a>
 {% endblock %}

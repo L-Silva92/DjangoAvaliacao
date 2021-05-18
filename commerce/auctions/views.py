@@ -1,11 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import User, leilao, categ
+from .models import Bid, Lance, User, leilao, categ
 
 
 def index(request):
@@ -13,9 +13,12 @@ def index(request):
         "teste": leilao.objects.all()
     })
 
+<<<<<<< HEAD
 def watchlist_view(request):
     return render(request, "auctions/watchlist.html")
 
+=======
+>>>>>>> 1706f1b48d4be419e377bc3e51d45a6476dc7515
 def login_view(request):
     if request.method == "POST":
 
@@ -35,11 +38,9 @@ def login_view(request):
     else:
         return render(request, "auctions/login.html")
 
-
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
-
 
 def register(request):
     if request.method == "POST":
@@ -94,6 +95,12 @@ def createlist_view(request):
             "categor": categor,
         })
 
+<<<<<<< HEAD
+=======
+def watchlist_view(request):
+    return render(request, "auctions/watchlist.html")
+
+>>>>>>> 1706f1b48d4be419e377bc3e51d45a6476dc7515
 def product(request, product_id):
     product = leilao.objects.get(id=product_id)
     return render(request, "auctions/product.html", {
