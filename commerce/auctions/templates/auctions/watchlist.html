@@ -2,7 +2,18 @@
 
 {% block body %}
 
-watch
+<h1>Watch List</h1>
+{% for product in produtos %}
+    {% for wl in wls %}
+        {% if product.id == wl.leilao_wl_id %}
+        <h2><a href="{% url 'product_id' product.id %}">Product: {{ product.titulo }}</a></h2>
+        <h3>Category: {{product.catego}}</h3>
+        <h3>Description: {{product.descricao}}</h3>
+        <h3>Price: US$ {{product.valor_min}}</h3>
+        <!--<img src="{{ leilao.foto.url }}" alt="{{ leilao.titulo }}">/!-->
 
-
+        <br>
+        {% endif %}
+    {% endfor %}   
+{% endfor %}   
 {% endblock %}

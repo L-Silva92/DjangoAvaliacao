@@ -4,19 +4,13 @@
 
 <h1>Categorias</h1>
 
-{% for i in filtro %}
-   
-        <ul>
-            <h2>Item: {{ i.id }}</h2>
-            <li>Título: {{ i.titulo }}</li>
-            <li>Descrição: {{ i.descriçao }}</li>
-            <li>Valor minímo: {{ i.valor_min }}</li>
-            <li>Dono: {{ i.dono }} </li>
-        </ul>
-        
-
+{% for leilao in filtro %}
+    <h1><a href="{% url 'product_id' leilao.id %}">Product: {{ leilao.titulo }}</a></h1>
+    <h2>Description: {{ leilao.descricao }}</h2>
+    <h5>Price: US$ {{ leilao.valor_min }}</h5>
+    <h5>Seller: {{ leilao.dono }}</h5>
+    <br>
 {% endfor %}
-
 <a href="{% url 'categories' %}">All Categories</a>
 
 {% endblock %}

@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import Bid, Lance, User, leilao, categ
+from .models import User, leilao, categ, watchlist
 
 
 def index(request):
@@ -13,12 +13,6 @@ def index(request):
         "teste": leilao.objects.all()
     })
 
-<<<<<<< HEAD
-def watchlist_view(request):
-    return render(request, "auctions/watchlist.html")
-
-=======
->>>>>>> 1706f1b48d4be419e377bc3e51d45a6476dc7515
 def login_view(request):
     if request.method == "POST":
 
@@ -95,12 +89,9 @@ def createlist_view(request):
             "categor": categor,
         })
 
-<<<<<<< HEAD
-=======
 def watchlist_view(request):
     return render(request, "auctions/watchlist.html")
 
->>>>>>> 1706f1b48d4be419e377bc3e51d45a6476dc7515
 def product(request, product_id):
     product = leilao.objects.get(id=product_id)
     return render(request, "auctions/product.html", {
@@ -114,3 +105,30 @@ def filtro(request,filtro_id):
         "filtro" : filtro,
         "passengers":passengers,
     })
+
+def watchlist_view(request):
+    return render(request, "auctions/watchlist.html", {
+        "produtos" : leilao.objects.all(),
+        "wls" : watchlist.objects.filter(user_wl_id=request.user.id)
+    })
+
+def watchlist_add(request, product_id):
+    teste = watchlist.objects.filter(user_wl_id = request.user.id, leilao_wl_id = product_id)
+    if not teste :
+        wl_temp = watchlist()
+        wl_temp.user_wl_id=request.user.id
+        wl_temp.leilao_wl_id=int(product_id)
+        wl_temp.save()
+    else:
+        return HttpResponseRedirect(reverse("watchlist"))
+    return HttpResponseRedirect(reverse("watchlist"))
+
+def watchlist_del(request, product_id):
+    try:
+        user_wl_temp = request.user.id
+        wl_temp_del = watchlist.objects.filter(leilao_wl_id = product_id, user_wl_id = user_wl_temp)
+        wl_temp_del.delete()
+
+    except IntegrityError:
+        return HttpResponseRedirect(reverse("watchlist"))
+    return HttpResponseRedirect(reverse("watchlist"))

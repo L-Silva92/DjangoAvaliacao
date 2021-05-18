@@ -2,18 +2,18 @@
 
 {% block body %}
 
-<h1>Criar um novo item:</h1>
+<h1>Register item:</h1>
 
 <form action="{% url 'createlist' %}" method="post">
     {% csrf_token %}
     <div class="form-group">
-        <input autofocus class="form-control" type="text" name="title" placeholder="Titulo">
+        <input autofocus class="form-control" type="text" name="title" placeholder="Title">
     </div>
     <div class="form-group">
-        <input autofocus class="form-control" type="text" name="desc" placeholder="Descrição">
+        <input autofocus class="form-control" type="text" name="desc" placeholder="Description">
     </div>
     <div class="form-group">
-        <input autofocus class="form-control" type="number" name="valor_m" placeholder="Valor Minimo">
+        <input autofocus class="form-control" type="number" name="valor_m" placeholder="Price">
     </div>
     <!--<div class="form-group">
         <input autofocus class="form-control" type="text" name="url" placeholder="Url da imagem">
@@ -21,13 +21,13 @@
 
     <div class="form-group">
         <select name="cate" id="">
-            <option>-----Selecione-----</option>
+            <option>-----Select-----</option>
             {% for cate in categor %}
                 <option values= "{{ cate.id }}"> {{ cate.cat }} </option>
             {% endfor %}
         </select>
     </div>
-    <input class="btn btn-primary" type="submit" value="Carregar item">
+    <input class="btn btn-primary" type="submit" value="Register">
 </form>
 {% endblock %}
 

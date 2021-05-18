@@ -3,10 +3,11 @@
 {% block body %}
     <h2>Active Listings</h2>
     {% for leilao in teste %}
-        <h2><a href="{% url 'product_id' leilao.id %}">{{ leilao.id }} {{ leilao.titulo }}</a></h2>
-        <h3>{{leilao.descricao}}</h3>
-        <h3>{{leilao.valor_min}}</h3>
+        <h1><a href="{% url 'product_id' leilao.id %}">Product: {{ leilao.titulo }}</a></h1>
+        <h3>Description: {{leilao.descricao}}</h3>
+        <h5>Price: US$ {{leilao.valor_min}}</h5>
         <!--<img src="{{ leilao.foto.url }}" alt="{{ leilao.titulo }}">/!-->
-        <h3>{{leilao.categ}}</h3>
+        <h5>Category: {{leilao.catego}}</h5>
+        <br>
     {% endfor %}
 {% endblock %}

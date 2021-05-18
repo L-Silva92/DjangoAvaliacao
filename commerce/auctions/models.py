@@ -22,12 +22,9 @@ class leilao(models.Model):
     def __str__(self):
         return f"{self.id}: {self.titulo} | {self.descricao} | {self.valor_min} | {self.foto.url} | {self.categ}"
 
-class Lance(models.Model):
-    lance = models.IntegerField(max_length=10)
-    userlance = models.CharField(max_length=10)
-    produto = models.CharField(max_length=10)
+class watchlist(models.Model):
+    user_wl = models.ForeignKey(User,on_delete=models.CASCADE,related_name="usuario_wl")
+    leilao_wl = models.ForeignKey(leilao,on_delete=models.CASCADE,related_name="product_wl")
 
-class Bid(models.Model):
-    bidder = models.ForeignKey(User, on_delete=models.CASCADE)
-    auction = models.ForeignKey(leilao, on_delete=models.CASCADE)
-    amount = models.IntegerField()
+    def __str__(self):
+        return f"{self.id}: {self.user_wl} | {self.leilao_wl}"
