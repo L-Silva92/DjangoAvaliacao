@@ -13,6 +13,8 @@ def index(request):
         "teste": leilao.objects.all()
     })
 
+def watchlist_view(request):
+    return render(request, "auctions/watchlist.html")
 
 def login_view(request):
     if request.method == "POST":
@@ -91,10 +93,6 @@ def createlist_view(request):
         return render(request, "auctions/createlist.html",{
             "categor": categor,
         })
-
-
-def watchlist_view(request):
-    return render(request, "auctions/watchlist.html")
 
 def product(request, product_id):
     product = leilao.objects.get(id=product_id)

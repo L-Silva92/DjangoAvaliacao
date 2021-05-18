@@ -5,7 +5,7 @@
 <h1>Categorias</h1>
 <ul>
     {% for i in categs %}
-        <li><a href="{% url 'filtro_id' i.cat %}"> {{ i.cat }} </a></li>
+    <li><a href="{% url 'filtro_id' i.cat %}"> {{ i.cat }} </a></li>
     {% endfor %}
 </ul>
 
